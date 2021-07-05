@@ -114,4 +114,8 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+<select id="selectUserByName" parameterType="string" resultMap="BaseResultMap">
+select * from  imooc_mall_user
+where username = #{username,jdbcType=VARCHAR}
+</select>
 </mapper>
