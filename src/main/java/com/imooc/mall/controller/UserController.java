@@ -62,7 +62,7 @@ public class UserController {
 
     @PostMapping("/user/update")
     @ResponseBody
-    public ApiRestResponse update(HttpSession session, String signature) throws ImoocMallException {
+    public ApiRestResponse update(HttpSession session, @RequestParam("signature") String signature) throws ImoocMallException {
         User currentUser = (User) session.getAttribute(Constants.IMOOC_MALL_USER);
         if (currentUser == null) {
             throw new ImoocMallException(ImoocMallExceptionEnum.NEED_LOGIN);
