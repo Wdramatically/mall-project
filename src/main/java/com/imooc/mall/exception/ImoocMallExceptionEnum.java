@@ -9,7 +9,8 @@ public enum ImoocMallExceptionEnum {
     NEED_PASSWORD(10002, "密码不能为空"),
     PASSWORD_TOO_SHORT(10003,"密码长度太短"),
     USERNAME_EXIST(10004,"用户名已存在"),
-    INSERT_FAIL(10005,"插入失败，请稍后重试");
+    INSERT_FAIL(10005,"插入失败，请稍后重试"),
+    SYSTEM_ERROR(20000,"系统异常");
 
     private Integer code;
 
