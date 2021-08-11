@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     public void register(String username, String password) throws ImoocMallException {
         User result = userMapper.selectUserByName(username);
         if (result != null) {
-            throw new ImoocMallException(ImoocMallExceptionEnum.USERNAME_EXIST);
+            throw new ImoocMallException(ImoocMallExceptionEnum.NAME_EXIST);
         }
         User user = new User();
         user.setUsername(username);

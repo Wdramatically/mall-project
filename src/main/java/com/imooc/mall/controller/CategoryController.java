@@ -5,9 +5,11 @@ import com.imooc.mall.common.Constants;
 import com.imooc.mall.exception.ImoocMallExceptionEnum;
 import com.imooc.mall.model.pojo.User;
 import com.imooc.mall.model.request.AddCategoryReq;
+import com.imooc.mall.model.request.UpdateCategoryReq;
 import com.imooc.mall.service.CategoryService;
 import com.imooc.mall.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Objects;
 
 @Controller
 @ApiOperation("商品分类")
@@ -31,16 +34,37 @@ public class CategoryController {
     @PostMapping("/admin/category/add")
     @ResponseBody
     public ApiRestResponse addCategory(HttpSession session, @Valid @RequestBody AddCategoryReq addCategoryReq) {
+        ApiRestResponse apiRestResponse = checkUserRole(session);
+        if (Objects.isNull(apiRestResponse)){
+            categoryService.addCategory(addCategoryReq);
+        }else{
+            return apiRestResponse;
+        }
+        return ApiRestResponse.success();
+    }
+
+    @ApiOperation("更新商品分类")
+    @PostMapping("/admin/category/update")
+    @ResponseBody
+    public ApiRestResponse updateCategory(HttpSession session, @Valid @RequestBody UpdateCategoryReq updateCategoryReq) {
+        ApiRestResponse apiRestResponse = checkUserRole(session);
+        if (Objects.isNull(apiRestResponse)){
+            categoryService.updateCategory(updateCategoryReq);
+        }else{
+            return apiRestResponse;
+        }
+        return ApiRestResponse.success();
+    }
+
+    private ApiRestResponse checkUserRole(HttpSession session) {
         User user = (User) session.getAttribute(Constants.IMOOC_MALL_USER);
         if (user == null){
             return ApiRestResponse.error(ImoocMallExceptionEnum.NEED_LOGIN);
         }
         boolean isAdminRole = userService.isAdminRole(user);
-        if (isAdminRole) {
-            categoryService.addCategory(addCategoryReq);
-        }else {
+        if (!isAdminRole) {
             return ApiRestResponse.error(ImoocMallExceptionEnum.NEED_ADMIN);
         }
-        return ApiRestResponse.success();
+        return null;
     }
 }
