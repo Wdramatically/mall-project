@@ -14,6 +14,9 @@ public enum ImoocMallExceptionEnum {
     NEED_LOGIN(10007,"用户尚未登录"),
     UPDATE_FAIL(10008,"更新失败"),
     NEED_ADMIN(10009,"无管理员权限"),
+    PARAM_NAME_EXIST(10010, "参数值已存在"),
+    CREATE_FAILED(10011, "新增失败"),
+    REQUEST_PARAM_ERROR(10012, "参数错误"),
     SYSTEM_ERROR(20000,"系统异常");
 
     private Integer code;

@@ -18,8 +18,12 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class UserController {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/test")
     @ResponseBody
